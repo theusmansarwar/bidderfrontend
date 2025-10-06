@@ -19,14 +19,13 @@ const ProductsSection = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  // ✅ Fetch products whenever page or rowsPerPage changes
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await getAllProducts(page, rowsPerPage);
         setProducts(res?.products || []);
-        setTotalItems(res?.totalProducts || 0);
-        setTotalPages(Math.ceil((res?.totalProducts || 0) / rowsPerPage));
+        setTotalItems(res?.total || 0); // ✅ use res.total
+        setTotalPages(res?.totalPages || 1);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -41,7 +40,7 @@ const ProductsSection = () => {
   };
 
   // ✅ Calculate start and end range for display
-  const start = (page - 1) * rowsPerPage + 1;
+  const start = products.length > 0 ? (page - 1) * rowsPerPage + 1 : 0;
   const end = Math.min(page * rowsPerPage, totalItems);
 
   return (
@@ -65,11 +64,13 @@ const ProductsSection = () => {
         spacing={2}
         alignItems="center"
         justifyContent="space-between"
-        sx={{ mt: 3, width:"90%", margin:"40px auto", }}
+        sx={{ mt: 3, width: "90%", margin: "40px auto" }}
       >
         {/* Left: Showing range */}
         <Typography variant="body2" color="text.secondary">
-          Showing {start}-{end} of {totalItems} artworks
+          {totalItems > 0
+            ? `Showing ${start}-${end} of ${totalItems} artworks`
+            : "No artworks available"}
         </Typography>
 
         {/* Middle: Pagination */}
