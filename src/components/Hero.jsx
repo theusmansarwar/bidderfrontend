@@ -59,7 +59,7 @@ const Hero = () => {
             className="min-w-full h-full flex items-center pl-[10%] md:pl-[5%] bg-center bg-cover bg-no-repeat "
             style={{ backgroundImage: `url(${slide.image})` }}
           >
-            <div className="flex flex-col gap-4 text-white max-w-[400px] z-10">
+            <div className="flex flex-col gap-4 text-white max-w-[400px] lg:ml-[5%] z-10">
               <h1 className="uppercase leading-tight">
                 <span className="block text-xl md:text-3xl font-bold">
                   {slide.title1}
