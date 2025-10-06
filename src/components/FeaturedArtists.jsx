@@ -43,7 +43,7 @@ const FeaturedArtists = () => {
   return (
     <section className="w-full bg-white py-12">
       <div className="max-w-5xl ml-[10%]">
-        <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8">
+        <h2 className="text-2xl md:text-4xl font-semibold text-gray-800 mb-8">
           Featured Artists & Works
         </h2>
 

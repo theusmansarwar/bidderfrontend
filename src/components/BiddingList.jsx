@@ -66,7 +66,7 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
 
   return (
     <div className=" border border-gray-200 p-4 rounded-xl shadow-md bg-white w-full transition-all duration-300 hover:shadow-lg">
-      <h2 className="text-xl font-bold text-gray-700 mb-3 text-center">
+      <h2 className="text-2xl font-bold text-gray-700 mb-3 text-center">
          Auction List
       </h2>
 

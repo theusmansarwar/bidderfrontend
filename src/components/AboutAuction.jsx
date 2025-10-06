@@ -5,7 +5,7 @@ const AboutAuction = () => {
     <div className="w-full bg-[#F7F7F7] mt-10 flex flex-col md:flex-row items-center justify-center gap-8 px-6 py-10 md:py-16">
       {/* Text Section */}
       <div className="w-full md:w-2/5 flex flex-col gap-2 md:gap-4 text-center md:text-left">
-        <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
+        <h2 className="text-2xl md:text-4xl font-semibold text-gray-800">
           About the Auction
         </h2>
         <p className="text-gray-700 leading-relaxed">
