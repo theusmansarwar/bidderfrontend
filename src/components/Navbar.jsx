@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "/moawin-logo.png";
 import Button from "./Button.jsx";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Signin from "./Signin";
@@ -59,7 +58,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <img
-            src={logo}
+            src="/moawin-logo.png"
             alt="Logo"
             className="w-auto h-12 cursor-pointer"
             onClick={() => navigate("/")}
