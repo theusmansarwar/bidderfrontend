@@ -55,7 +55,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-[95%] m-auto p-3 relative z-10">
+      <nav className="w-[90%] lg:w-[90%] m-auto py-3 relative z-10">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <img
