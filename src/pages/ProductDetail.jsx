@@ -119,9 +119,9 @@ const ProductDetail = () => {
 
           {/* Product Details */}
           <div className="w-full bg-white mt-6 p-4 rounded-lg shadow-md border border-gray-100 space-y-4">
-            <h1 className="text-3xl font-semibold text-gray-900">
+            <h2 className="text-2xl md:text-4xl font-semibold text-gray-800">
               {product.title}
-            </h1>
+            </h2>
             <p className="text-lg text-gray-600">By {product.artistName}</p>
             <div
               dangerouslySetInnerHTML={{
