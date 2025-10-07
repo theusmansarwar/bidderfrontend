@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+
+html {
+  scroll-behavior: smooth;
+}
+
 .custom-scrollbar {
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: rgba(0, 128, 0, 0.6) transparent; /* Firefox: green + transparent bg */

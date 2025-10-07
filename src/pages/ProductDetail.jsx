@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { baseUrl } from "../config/Config";
 import BiddingList from "../components/BiddingList";
 import { placeBid } from "../DAL/Create";
 import { getProductById } from "../DAL/Fetch";
+import Button from "../components/Button";
+import { GiSandsOfTime } from "react-icons/gi";
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [bidPrice, setBidPrice] = useState("");
   const [timeLeft, setTimeLeft] = useState("");
   const [highestBid, setHighestBid] = useState(0);
+  const [showFullBio, setShowFullBio] = useState(false);
 
   // ✅ Fetch product
   useEffect(() => {
@@ -26,7 +30,7 @@ const ProductDetail = () => {
     fetchProductById();
   }, [id]);
 
-  // Auction timer (display: show days only if >24h)
+  // 🕒 Auction countdown timer
   useEffect(() => {
     if (!product?.auctionEndDate) return;
 
@@ -48,25 +52,19 @@ const ProductDetail = () => {
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       let formatted = "";
-
-      if (days > 0) {
-        formatted = `${days}d ${hours}h ${minutes}m`;
-      } else if (hours > 0) {
-        formatted = `${hours}h ${minutes}m ${seconds}s`;
-      } else {
-        formatted = `${minutes}m ${seconds}s`;
-      }
+      if (days > 0) formatted = `${days}d ${hours}h ${minutes}m`;
+      else if (hours > 0) formatted = `${hours}h ${minutes}m ${seconds}s`;
+      else formatted = `${minutes}m ${seconds}s`;
 
       setTimeLeft(formatted);
     };
 
-    updateTimer(); // Run immediately
+    updateTimer();
     const interval = setInterval(updateTimer, 1000);
-
     return () => clearInterval(interval);
   }, [product]);
 
-  // 🟣 Handle bid submission
+  // 💵 Place bid
   const handlePlaceBid = async () => {
     if (!bidPrice || bidPrice <= (highestBid || product.minimumBid)) {
       toast.error(
@@ -103,40 +101,83 @@ const ProductDetail = () => {
     }
   };
 
+  // 🗓️ Format auction date (12-hour + timezone)
+  const formatAuctionDate = (isoDate) => {
+    if (!isoDate) return "";
+    const date = new Date(isoDate);
+
+    const formattedDate = date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+
+    const formattedTime = date.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+      timeZoneName: "short",
+    });
+
+    return `${formattedDate} | starting at ${formattedTime}`;
+  };
+
   if (!product) return <p className="text-center mt-10">Loading...</p>;
+
+ 
 
   return (
     <div className="w-[90%] mx-auto py-6 lg:py-10 mt-10 overflow-x-hidden">
-      <div className="flex flex-col lg:flex-row gap-12 ">
+      <div className="flex flex-col lg:flex-row gap-12">
         {/* LEFT: Image + Details */}
         <div className="w-full lg:w-[65%] flex flex-col items-start">
-          {/* Product Image */}
           <img
             src={`${baseUrl}${product.image}`}
             alt={product.title}
             className="w-full max-w-full h-[400px] object-cover rounded-lg shadow-lg border border-gray-100"
           />
 
-          {/* Product Details */}
           <div className="w-full bg-white mt-6 p-4 rounded-lg shadow-md border border-gray-100 space-y-4">
-            <h2 className="text-2xl md:text-4xl font-semibold text-gray-800">
-              {product.title}
-            </h2>
-            <p className="text-lg text-gray-600">By {product.artistName}</p>
+            <div className="w-full flex gap-5 items-center justify-between">
+              <h2 className="text-2xl md:text-4xl font-semibold text-gray-800">
+                {product.title}
+              </h2>
+              <Button
+                title="Back To Art"
+                onClick={() => navigate("/#products")}
+              />
+            </div>
+
             <div
               dangerouslySetInnerHTML={{
                 __html: product?.description || "",
               }}
             />
-            <p className="text-gray-700">
-              <strong>Status:</strong>{" "}
+
+            <p className="font-semibold text-lg text-gray-700">
+              Artist:{" "}
+              <span className="font-normal text-base text-gray-700">
+                {product.artistName}
+              </span>
+            </p>
+            <p className="font-semibold text-lg text-gray-700">
+              Country:{" "}
+              <span className="font-normal text-base text-gray-700">
+                {product.artistCountry}
+              </span>
+            </p>
+
+            {/* 🕓 Status */}
+            <p className="font-medium text-lg text-gray-700">
+              <span>Status:</span>{" "}
               {product.soldOut ? (
-                <span className="text-red-500 font-medium">Sold</span>
+                <span className="text-red-500 font-normal">Sold</span>
               ) : (
-                <span className="text-green-600 font-medium">Available</span>
+                <span className="text-green-600 font-normal">Available</span>
               )}
             </p>
 
+            {/* 💰 Bidding Info */}
             <div className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded-md">
               <span className="text-gray-700 font-medium">
                 {highestBid ? "Current Highest Bid:" : "Starting Bid:"}
@@ -145,14 +186,25 @@ const ProductDetail = () => {
                 ${highestBid || product.minimumBid}
               </span>
             </div>
-
-            <p className="text-red-500 font-medium text-sm">
-              ⏳ Time Left: {timeLeft}
+            {/* 🗓️ Auction Dates */}
+            <p className="font-medium text-[14px] text-gray-700">
+              <span className="text-gray-600  uppercase">
+                {formatAuctionDate(product.auctionStartDate)}
+              </span>
             </p>
 
+            {/* ⏳ Time Left */}
+            <p className="text-red-500 font-medium text-sm flex items-center gap-1">
+              <GiSandsOfTime className="text-gray-700 shrink-0 text-lg" />
+              Time Left: {timeLeft}
+            </p>
+
+            {/* 💸 Place Bid */}
             <div className="mt-2 flex flex-col gap-3">
               <div className="relative w-full md:w-80">
-                <span className="absolute left-3 top-[8px] text-gray-500">$</span>
+                <span className="absolute left-3 top-[8px] text-gray-500">
+                  $
+                </span>
                 <input
                   type="number"
                   placeholder="Enter your bid"
@@ -176,6 +228,7 @@ const ProductDetail = () => {
           </div>
         </div>
 
+        {/* RIGHT: Bidding List */}
         <div className="w-full lg:w-[20%] lg:ml-0">
           <BiddingList productId={id} onHighestBidChange={setHighestBid} />
         </div>
