@@ -88,13 +88,75 @@ const Navbar = () => {
               <Button title="Signin" onClick={() => toggleModal("signin")} />
             )}
           </div>
-
           {/* Mobile Menu Icon */}
-          <div className="lg:hidden flex items-center gap-4 ">
-            <button onClick={toggleMenu} className="text-xl">
+          <div className="lg:hidden flex items-center gap-4">
+            <button
+              onClick={toggleMenu}
+              className="text-xl"
+              aria-label="Toggle Menu"
+            >
               {isMenuOpen ? <FaTimes /> : <FaBars />}
             </button>
           </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`z-50 lg:hidden fixed top-0 left-0 w-full h-full bg-white transition-transform duration-300 transform ${
+            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          } z-40`}
+        >
+          <div className="flex flex-col items-center pt-10 space-y-6 uppercase">
+            <a
+              href="https://moawin-usa.org/"
+              className="text-gray-700 hover:text-brightColor transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </a>
+            <a
+              href="https://moawin-usa.org/about/"
+              className="text-gray-700 hover:text-brightColor transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </a>
+            <a
+              href="https://moawin-usa.org/contact/"
+              className="text-gray-700 hover:text-brightColor transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </a>
+
+            {isAuthenticated ? (
+              <div
+                className="flex items-center text-gray-700 hover:text-brightColor cursor-pointer"
+                onClick={logout}
+              >
+                <IoLogOutOutline className="w-5 h-5 mr-2 text-brightColor" />
+                <span>Logout</span>
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  toggleModal("signin");
+                  setIsMenuOpen(false);
+                }}
+                className="uppercase cursor-pointer text-gray-700 hover:text-brightColor"
+              >
+                Sign in
+              </div>
+            )}
+          </div>
+
+          {/* Close Button */}
+          <button
+            onClick={toggleMenu}
+            className="absolute top-4 right-4 text-3xl text-gray-700"
+          >
+            <FaTimes />
+          </button>
         </div>
       </nav>
 

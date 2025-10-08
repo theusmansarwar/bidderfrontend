@@ -111,7 +111,7 @@ const ProductDetail = () => {
     }
   };
 
-  const formatAuctionDate = (isoDate) => {
+  const formatAuctionDate = (isoDate, label = "starting at") => {
     if (!isoDate) return "";
     const date = new Date(isoDate);
     const formattedDate = date.toLocaleDateString("en-GB", {
@@ -125,27 +125,37 @@ const ProductDetail = () => {
       hour12: true,
       timeZoneName: "short",
     });
-    return `${formattedDate} | starting at ${formattedTime}`;
+    return `${label} : ${formattedDate} |  ${formattedTime}`;
   };
 
   if (!product) return <p className="text-center mt-10">Loading...</p>;
 
   return (
     <>
-      <div className="w-[90%] mx-auto pb-5 mt-10 overflow-x-hidden">
-        {/* 🖼️ Full-width Image */}
-        <img
-          src={`${baseUrl}${product.image}`}
-          alt={product.title}
-          className="w-full h-[400px] object-cover rounded-lg shadow-lg border border-gray-100"
-        />
+      <div className="w-[90%] mx-auto pb-5  overflow-x-hidden">
+        {/* 🖼️ Art Image Container with Blur Background */}
+        <div className="relative w-full lg:h-[400px] h-[300px] overflow-hidden rounded-lg shadow-lg border border-gray-100 flex items-center justify-center bg-gray-100">
+          {/* Blurred background */}
+          <img
+            src={`${baseUrl}${product.image}`}
+            alt={product.title}
+            className=" absolute inset-0 w-full h-full object-cover blur-lg scale-110 opacity-50"
+          />
+
+          {/* Main centered image */}
+          <img
+            src={`${baseUrl}${product.image}`}
+            alt={product.title}
+            className="relative max-h-[90%] max-w-[90%] object-contain rounded-md shadow-xl z-1"
+          />
+        </div>
 
         {/* 📄 Details + Bidding Side by Side */}
         <div className="flex flex-col lg:flex-row gap-10 mt-10">
           {/* LEFT: Details */}
           <div className="w-full lg:w-[70%] bg-white p-4 rounded-lg shadow-md border border-gray-100 space-y-4">
-            <div className="w-full flex gap-5 items-center justify-between">
-              <h2 className="text-2xl md:text-4xl font-semibold text-gray-800">
+            <div className="w-full lg:flex gap-5 items-center justify-between">
+              <h2 className="text-2xl mb-2.5 lg:mb-0  md:text-4xl font-semibold text-gray-800">
                 {product.title}
               </h2>
               <Button
@@ -154,7 +164,7 @@ const ProductDetail = () => {
               />
             </div>
 
-            <div
+            <div className="list-none"
               dangerouslySetInnerHTML={{
                 __html: product?.description || "",
               }}
@@ -166,12 +176,7 @@ const ProductDetail = () => {
                 {product.artist.artistName}
               </span>
             </p>
-            <p className="font-semibold text-lg text-gray-700">
-              Country:{" "}
-              <span className="font-normal text-base text-gray-700">
-                {product.artist.artistCountry}
-              </span>
-            </p>
+           
 
             {/* 🕓 Status */}
             <p className="font-medium text-lg text-gray-700">
@@ -194,11 +199,18 @@ const ProductDetail = () => {
             </div>
 
             {/* 🗓️ Auction Dates */}
-            <p className="font-medium text-[14px] text-gray-700">
-              <span className="text-gray-600 uppercase">
-                {formatAuctionDate(product.auctionStartDate)}
-              </span>
-            </p>
+            <div className="font-medium text-[14px] text-gray-700 space-y-1">
+              <p>
+                <span className="text-gray-600">
+                  {formatAuctionDate(product.auctionStartDate, "STARTING AT")}
+                </span>
+              </p>
+              <p>
+                <span className="text-gray-600">
+                  {formatAuctionDate(product.auctionEndDate, "ENDING AT")}
+                </span>
+              </p>
+            </div>
 
             {/* ⏳ Time Left */}
             <p className="text-red-500 font-medium text-sm flex items-center gap-1">
@@ -208,7 +220,7 @@ const ProductDetail = () => {
 
             {/* 💸 Place Bid */}
             <div className="mt-2 flex flex-col gap-3">
-              <div className="relative w-full flex gap-2.5 items-center">
+              <div className="relative w-full  lg:flex gap-2.5 items-center">
                 <span className="absolute left-3 top-[8px] text-gray-500">
                   $
                 </span>
@@ -220,11 +232,11 @@ const ProductDetail = () => {
                     setBidPrice(e.target.value);
                     setShowBidError(false);
                   }}
-                  className={`border border-gray-300 rounded-md pl-7 pr-3 py-2 w-[300px] focus:ring-1 focus:ring-[#0DBB56]/30 outline-0 transition `}
+                  className={`border border-gray-300 rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] focus:ring-1 focus:ring-[#0DBB56]/30 outline-0 transition `}
                 />
                 <button
                   onClick={handlePlaceBid}
-                  className="w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
+                  className="mt-2.5 lg:mt-0 w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
                 >
                   Place Bid
                 </button>
