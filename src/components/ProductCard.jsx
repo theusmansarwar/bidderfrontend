@@ -5,7 +5,7 @@ const ProductCard = ({ data }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/products/${data._id}`);
+    navigate(`/art/${data._id}`);
   };
 
   return (
@@ -34,7 +34,7 @@ const ProductCard = ({ data }) => {
             onClick={handleClick}
             className="w-full bg-[#0DBB56] text-white cursor-pointer text-sm px-4 py-1.5 rounded-sm hover:opacity-90 transition"
           >
-            View Product
+            View Art
           </button>
         </div>
       </div>

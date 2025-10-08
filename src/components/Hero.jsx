@@ -72,7 +72,7 @@ const Hero = () => {
   return (
     <div className="bg-transparent relative w-[94%] sm:w-[90%] m-auto h-[360px] sm:h-[420px] md:h-[520px] mt-6 md:mt-8 overflow-hidden rounded-lg shadow-lg">
       {/* Top-right text */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-6 z-20 bg-black/40 backdrop-blur-sm text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm md:text-base font-medium tracking-wide">
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-6 z-1 bg-black/40 backdrop-blur-sm text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm md:text-base font-medium tracking-wide">
         Pakistani Artists’ Historical Results
       </div>
 

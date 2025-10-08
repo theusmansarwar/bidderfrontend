@@ -40,7 +40,7 @@ const App = () => {
 
       <ToastContainer
         position="top-right"
-        autoClose={1500}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -55,7 +55,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/art/:id" element={<ProductDetail />} />
       </Routes>
     </div>
   );

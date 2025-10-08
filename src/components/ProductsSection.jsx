@@ -15,7 +15,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [rowsPerPage, setRowsPerPage] = useState(12);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -44,7 +44,7 @@ const ProductsSection = () => {
   const end = Math.min(page * rowsPerPage, totalItems);
 
   return (
-    <div className="text-center px-4 mb-16" id="products">
+    <div className="text-center px-4 mb-16" id="artworks">
       <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-10">
         Featured Artworks
       </h1>
@@ -123,7 +123,7 @@ const ProductsSection = () => {
             }}
             sx={{ minWidth: 60 }}
           >
-            {[5, 8, 10, 20].map((num) => (
+            {[5, 8, 12, 20].map((num) => (
               <MenuItem key={num} value={num}>
                 {num}
               </MenuItem>
