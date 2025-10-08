@@ -27,7 +27,7 @@ const ProductCard = ({ data }) => {
         <h3 className="text-lg font-semibold text-gray-800 mb-1">
           {data.title}
         </h3>
-        <p className="text-gray-600 mb-3">{data.artistName}</p>
+        <p className="text-gray-600 mb-3">{data.artist.artistName}</p>
 
         <div className="flex items-center justify-between">
           <button

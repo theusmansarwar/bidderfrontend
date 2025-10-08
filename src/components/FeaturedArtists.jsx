@@ -71,14 +71,13 @@ const FeaturedArtists = () => {
                   </span>
                 </div>
                 <p
-                  className={`pr-2.5 text-gray-600 text-sm mt-2 transition-all duration-300 lg:text-justify text:left max-h-[300px] overflow-auto custom-scrollbar ${
+                  className={`pr-2.5 text-gray-600 text-sm mt-2 transition-all duration-300 lg:text-justify text-left max-h-[300px] overflow-auto custom-scrollbar ${
                     expanded[artist._id]
                       ? "line-clamp-none"
                       : "line-clamp-2 overflow-hidden"
                   }`}
-                >
-                  {artist.artistBio}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: artist.artistBio }}
+                ></p>
 
                 {artist.artistBio?.length > 100 && (
                   <button

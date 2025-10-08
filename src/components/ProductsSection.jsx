@@ -23,7 +23,8 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       try {
         const res = await getAllProducts(page, rowsPerPage);
-        setProducts(res?.products || []);
+
+        setProducts(res?.products.sort(() => Math.random() - 0.5) || []);
         setTotalItems(res?.total || 0); // ✅ use res.total
         setTotalPages(res?.totalPages || 1);
       } catch (error) {

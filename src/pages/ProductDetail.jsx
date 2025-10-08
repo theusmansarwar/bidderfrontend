@@ -111,9 +111,10 @@ const ProductDetail = () => {
     }
   };
 
-  const formatAuctionDate = (isoDate, label = "starting at") => {
+  const formatAuctionDate = (isoDate) => {
     if (!isoDate) return "";
     const date = new Date(isoDate);
+
     const formattedDate = date.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "long",
@@ -123,9 +124,9 @@ const ProductDetail = () => {
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
-      timeZoneName: "short",
     });
-    return `${label} : ${formattedDate} |  ${formattedTime}`;
+
+    return `${formattedDate} | ${formattedTime}`;
   };
 
   if (!product) return <p className="text-center mt-10">Loading...</p>;
@@ -164,27 +165,33 @@ const ProductDetail = () => {
               />
             </div>
 
-            <div className="list-none"
+            <div
+              className="list-none"
               dangerouslySetInnerHTML={{
                 __html: product?.description || "",
               }}
             />
 
-            <p className="font-semibold text-lg text-gray-700">
+            <p className="font-normal text-base text-gray-700">
               Artist:{" "}
-              <span className="font-normal text-base text-gray-700">
+              <span className="font-semibold text-base text-gray-700">
                 {product.artist.artistName}
               </span>
             </p>
-           
+            <p className="font-normal text-base text-gray-700">
+              Starting Bid:{" "}
+              <span className="font-semibold text-base text-gray-700">
+                ${product.minimumBid}
+              </span>
+            </p>
 
             {/* 🕓 Status */}
-            <p className="font-medium text-lg text-gray-700">
+            <p className="font-normal text-base text-gray-700">
               <span>Status:</span>{" "}
               {product.soldOut ? (
-                <span className="text-red-500 font-normal">Sold</span>
+                <span className="text-red-500 font-semibold">Sold</span>
               ) : (
-                <span className="text-green-600 font-normal">Available</span>
+                <span className="text-green-600 font-semibold">Available</span>
               )}
             </p>
 
@@ -199,21 +206,24 @@ const ProductDetail = () => {
             </div>
 
             {/* 🗓️ Auction Dates */}
-            <div className="font-medium text-[14px] text-gray-700 space-y-1">
+            <div className="font-normal text-base text-gray-700 space-y-1">
               <p>
-                <span className="text-gray-600">
-                  {formatAuctionDate(product.auctionStartDate, "STARTING AT")}
+                <span className="text-gray-600">Starting At: </span>
+                <span className="font-semibold text-gray-800">
+                  {formatAuctionDate(product.auctionStartDate)}
                 </span>
               </p>
+
               <p>
-                <span className="text-gray-600">
-                  {formatAuctionDate(product.auctionEndDate, "ENDING AT")}
+                <span className="text-gray-600">Ending At: </span>
+                <span className="font-semibold text-gray-800">
+                  {formatAuctionDate(product.auctionEndDate)}
                 </span>
               </p>
             </div>
 
             {/* ⏳ Time Left */}
-            <p className="text-red-500 font-medium text-sm flex items-center gap-1">
+            <p className="text-[#0DBB56] font-medium text-sm flex items-center gap-1">
               <GiSandsOfTime className="text-gray-700 shrink-0 text-lg" />
               Time Left: {timeLeft}
             </p>
@@ -232,8 +242,15 @@ const ProductDetail = () => {
                     setBidPrice(e.target.value);
                     setShowBidError(false);
                   }}
-                  className={`border border-gray-300 rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] focus:ring-1 focus:ring-[#0DBB56]/30 outline-0 transition `}
+                  className={`border rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] outline-0 transition
+    ${
+      showBidError
+        ? "border-red-500 focus:ring-red-300"
+        : "border-gray-300 focus:ring-[#0DBB56]/30"
+    }
+  `}
                 />
+
                 <button
                   onClick={handlePlaceBid}
                   className="mt-2.5 lg:mt-0 w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
