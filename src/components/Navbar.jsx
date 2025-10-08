@@ -36,24 +36,38 @@ const Navbar = () => {
     <>
       <nav className="w-[90%] mx-auto py-3 relative z-10">
         <div className="flex justify-between items-center">
-          <img
-            src="/moawin-logo.png"
-            alt="Logo"
-            className="w-auto h-12 cursor-pointer"
-            onClick={() => navigate("/")}
-          />
+          <a href="https://moawin-usa.org/" target="_blank">
+            <img
+              src="/moawin-logo.png"
+              alt="Logo"
+              className="w-auto h-12 cursor-pointer"
+              onClick={() => navigate("/")}
+            />
+          </a>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center flex-grow">
             <ul className="flex gap-6 mx-auto uppercase">
               <li className="hover:text-[#0DBB56] transition">
-                <a href="https://moawin-usa.org/">Home</a>
+                <a target="_blank" href="https://moawin-usa.org/">
+                  Home
+                </a>
               </li>
               <li className="hover:text-[#0DBB56] transition">
-                <a href="https://moawin-usa.org/about/">About</a>
+                <a target="_blank" href="https://moawin-usa.org/about/">
+                  About
+                </a>
               </li>
               <li className="hover:text-[#0DBB56] transition">
-                <a href="https://moawin-usa.org/contact/">Contact</a>
+                <a target="_blank" href="https://moawin-usa.org/contact/">
+                  Contact
+                </a>
+              </li>
+              <li
+                onClick={() => navigate("/")}
+                className="hover:text-[#0DBB56] transition cursor-pointer list-none"
+              >
+                Moawin Art Auction
               </li>
             </ul>
           </div>
@@ -108,6 +122,7 @@ const Navbar = () => {
         >
           <div className="flex flex-col items-center pt-10 space-y-6 uppercase">
             <a
+              target="_blank"
               href="https://moawin-usa.org/"
               className="text-gray-700 hover:text-brightColor transition-colors"
               onClick={() => setIsMenuOpen(false)}
@@ -115,6 +130,7 @@ const Navbar = () => {
               Home
             </a>
             <a
+              target="_blank"
               href="https://moawin-usa.org/about/"
               className="text-gray-700 hover:text-brightColor transition-colors"
               onClick={() => setIsMenuOpen(false)}
@@ -122,12 +138,22 @@ const Navbar = () => {
               About
             </a>
             <a
+              target="_blank"
               href="https://moawin-usa.org/contact/"
               className="text-gray-700 hover:text-brightColor transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
             </a>
+            <li
+              onClick={() => {
+                navigate("/");
+                setIsMenuOpen(false);
+              }}
+              className="hover:text-[#0DBB56] transition cursor-pointer list-none"
+            >
+              Moawin Art Auction
+            </li>
 
             {isAuthenticated ? (
               <div
