@@ -27,7 +27,7 @@ const ProductDetail = () => {
   const toggleModal = (type) => setModalType(type);
   const closeModal = () => setModalType(null);
 
-  // ✅ Fetch product
+  // Fetch product by ID
   useEffect(() => {
     const fetchProductById = async () => {
       try {
@@ -40,7 +40,7 @@ const ProductDetail = () => {
     fetchProductById();
   }, [id]);
 
-  // 🕒 Countdown timer
+  // Countdown timer
   useEffect(() => {
     if (!product?.auctionEndDate) return;
 
@@ -74,7 +74,7 @@ const ProductDetail = () => {
     return () => clearInterval(interval);
   }, [product]);
 
-  // 💵 Place bid
+  // Place bid (starting bid remains unchanged)
   const handlePlaceBid = async () => {
     if (!user) {
       toggleModal("signup");
@@ -85,7 +85,7 @@ const ProductDetail = () => {
 
     if (!bidPrice || Number(bidPrice) <= minBid) {
       toast.error(`Bid must be higher than $${minBid}`);
-      setShowBidError(true); // show red text
+      setShowBidError(true);
       return;
     }
 
@@ -99,12 +99,8 @@ const ProductDetail = () => {
       await placeBid(bidData);
       toast.success("Bid placed successfully!");
       setBidPrice("");
-      setHighestBid(Number(bidPrice));
-      setProduct((prev) => ({
-        ...prev,
-        minimumBid: Number(bidPrice),
-      }));
-      setShowBidError(false); // hide error if successful
+      setHighestBid(Number(bidPrice)); // only update highest bid
+      setShowBidError(false);
     } catch (error) {
       console.error("Error placing bid:", error);
       toast.error(error.response?.data?.message || "Failed to place bid");
@@ -133,17 +129,14 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="w-[90%] mx-auto pb-5  overflow-x-hidden">
-        {/* 🖼️ Art Image Container with Blur Background */}
+      <div className="w-[90%] mx-auto pb-5 overflow-x-hidden">
+        {/* Art Image Container */}
         <div className="relative w-full lg:h-[400px] h-[300px] overflow-hidden rounded-lg shadow-lg border border-gray-100 flex items-center justify-center bg-gray-100">
-          {/* Blurred background */}
           <img
             src={`${baseUrl}${product.image}`}
             alt={product.title}
-            className=" absolute inset-0 w-full h-full object-cover blur-lg scale-110 opacity-50"
+            className="absolute inset-0 w-full h-full object-cover blur-lg scale-110 opacity-50"
           />
-
-          {/* Main centered image */}
           <img
             src={`${baseUrl}${product.image}`}
             alt={product.title}
@@ -151,12 +144,12 @@ const ProductDetail = () => {
           />
         </div>
 
-        {/* 📄 Details + Bidding Side by Side */}
+        {/* Details + Bidding */}
         <div className="flex flex-col lg:flex-row gap-10 mt-10">
-          {/* LEFT: Details */}
+          {/* Left: Details */}
           <div className="w-full lg:w-[70%] bg-white p-4 rounded-lg shadow-md border border-gray-100 space-y-4">
             <div className="w-full lg:flex gap-5 items-center justify-between">
-              <h2 className="text-2xl mb-2.5 lg:mb-0  md:text-4xl font-semibold text-gray-800">
+              <h2 className="text-2xl mb-2.5 lg:mb-0 md:text-4xl font-semibold text-gray-800">
                 {product.title}
               </h2>
               <Button
@@ -167,9 +160,7 @@ const ProductDetail = () => {
 
             <div
               className="list-none"
-              dangerouslySetInnerHTML={{
-                __html: product?.description || "",
-              }}
+              dangerouslySetInnerHTML={{ __html: product?.description || "" }}
             />
 
             <p className="font-normal text-base text-gray-700">
@@ -178,6 +169,7 @@ const ProductDetail = () => {
                 {product.artist.artistName}
               </span>
             </p>
+
             <p className="font-normal text-base text-gray-700">
               Starting Bid:{" "}
               <span className="font-semibold text-base text-gray-700">
@@ -185,9 +177,8 @@ const ProductDetail = () => {
               </span>
             </p>
 
-            {/* 🕓 Status */}
             <p className="font-normal text-base text-gray-700">
-              <span>Status:</span>{" "}
+              Status:{" "}
               {product.soldOut ? (
                 <span className="text-red-500 font-semibold">Sold</span>
               ) : (
@@ -195,14 +186,15 @@ const ProductDetail = () => {
               )}
             </p>
 
-            <div class="flex items-center my-5">
-  <div class="flex-grow border-t border-gray-300"></div>
-  <span class="mx-3 text-green-600 font-medium text-sm">Start Bid Now</span>
-  <div class="flex-grow border-t border-gray-300"></div>
-</div>
+            <div className="flex items-center my-5">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="mx-3 text-green-600 font-medium text-sm">
+                Start Bid Now
+              </span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
 
-
-            {/* 🗓️ Auction Dates */}
+            {/* Auction Dates */}
             <div className="font-normal text-base text-gray-700 space-y-1">
               <p>
                 <span className="text-gray-600">Starting At: </span>
@@ -210,7 +202,6 @@ const ProductDetail = () => {
                   {formatAuctionDate(product.auctionStartDate)}
                 </span>
               </p>
-
               <p>
                 <span className="text-gray-600">Ending At: </span>
                 <span className="font-semibold text-gray-800">
@@ -219,15 +210,15 @@ const ProductDetail = () => {
               </p>
             </div>
 
-            {/* ⏳ Time Left */}
+            {/* Time Left */}
             <p className="text-[#0DBB56] font-medium text-sm flex items-center gap-1">
               <GiSandsOfTime className="text-gray-700 shrink-0 text-lg" />
               Time Left: {timeLeft}
             </p>
 
-            {/* 💸 Place Bid */}
+            {/* Place Bid */}
             <div className="mt-2 flex flex-col gap-3">
-              <div className="relative w-full  lg:flex gap-2.5 items-center">
+              <div className="relative w-full lg:flex gap-2.5 items-center">
                 <span className="absolute left-3 top-[8px] text-gray-500">
                   $
                 </span>
@@ -240,14 +231,12 @@ const ProductDetail = () => {
                     setShowBidError(false);
                   }}
                   className={`border rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] outline-0 transition
-    ${
-      showBidError
-        ? "border-red-500 focus:ring-red-300"
-        : "border-gray-300 focus:ring-[#0DBB56]/30"
-    }
-  `}
+                    ${
+                      showBidError
+                        ? "border-red-500 focus:ring-red-300"
+                        : "border-gray-300 focus:ring-[#0DBB56]/30"
+                    }`}
                 />
-
                 <button
                   onClick={handlePlaceBid}
                   className="mt-2.5 lg:mt-0 w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
@@ -261,36 +250,31 @@ const ProductDetail = () => {
                   showBidError ? "text-red-500 font-medium" : "text-gray-500"
                 }`}
               >
-                (Enter more than or equal to ${highestBid || product.minimumBid}
-                )
+                (Enter more than or equal to ${highestBid || product.minimumBid})
               </p>
             </div>
           </div>
 
-          {/* RIGHT: Bidding List */}
+          {/* Right: Bidding List */}
           <div className="w-full lg:w-[30%]">
             <BiddingList productId={id} onHighestBidChange={setHighestBid} />
           </div>
         </div>
       </div>
 
-      {/* 🔹 Modals */}
+      {/* Modals */}
       {modalType === "signin" && (
         <Signin
           onSignUpClick={() => toggleModal("signup")}
           onClose={closeModal}
-          onSignInSuccess={() => {
-            closeModal();
-          }}
+          onSignInSuccess={closeModal}
         />
       )}
       {modalType === "signup" && (
         <Signup
           onClose={closeModal}
           onSignInClick={() => toggleModal("signin")}
-          onSignupSuccess={() => {
-            closeModal();
-          }}
+          onSignupSuccess={closeModal}
         />
       )}
     </>
