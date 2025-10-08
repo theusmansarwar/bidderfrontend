@@ -15,7 +15,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(12);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -124,7 +124,7 @@ const ProductsSection = () => {
             }}
             sx={{ minWidth: 60 }}
           >
-            {[5, 8, 12, 20].map((num) => (
+            {[8, 16, 20, 40].map((num) => (
               <MenuItem key={num} value={num}>
                 {num}
               </MenuItem>
