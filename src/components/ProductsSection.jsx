@@ -45,7 +45,7 @@ const ProductsSection = () => {
   const end = Math.min(page * rowsPerPage, totalItems);
 
   return (
-    <div className="text-center px-4 mb-16" id="artworks">
+    <div className="text-center px-4 mb-16" >
       <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-10">
         Featured Artworks
       </h1>

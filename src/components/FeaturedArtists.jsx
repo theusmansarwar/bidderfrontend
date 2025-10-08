@@ -15,7 +15,7 @@ const FeaturedArtists = () => {
     const fetchFeaturedArtists = async () => {
       try {
         setLoading(true);
-        const res = await getFeaturedArtists(5);
+        const res = await getFeaturedArtists(10);
 
         if (res && res.status === 200 && res.artists) {
           setFeatured(res.artists);
