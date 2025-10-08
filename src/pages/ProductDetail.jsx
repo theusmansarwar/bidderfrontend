@@ -195,15 +195,12 @@ const ProductDetail = () => {
               )}
             </p>
 
-            {/* 💰 Bidding Info */}
-            <div className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded-md">
-              <span className="text-gray-700 font-medium">
-                {highestBid ? "Current Highest Bid:" : "Starting Bid:"}
-              </span>
-              <span className="text-[#0DBB56] font-semibold text-lg">
-                ${highestBid || product.minimumBid}
-              </span>
-            </div>
+            <div class="flex items-center my-5">
+  <div class="flex-grow border-t border-gray-300"></div>
+  <span class="mx-3 text-green-600 font-medium text-sm">Start Bid Now</span>
+  <div class="flex-grow border-t border-gray-300"></div>
+</div>
+
 
             {/* 🗓️ Auction Dates */}
             <div className="font-normal text-base text-gray-700 space-y-1">
