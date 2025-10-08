@@ -99,7 +99,7 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <Button title="Signin" onClick={() => toggleModal("signin")} />
+              <Button title="Sign In" onClick={() => toggleModal("signin")} />
             )}
           </div>
           {/* Mobile Menu Icon */}
@@ -171,7 +171,7 @@ const Navbar = () => {
                 }}
                 className="uppercase cursor-pointer text-gray-700 hover:text-brightColor"
               >
-                Sign in
+                Sign In
               </div>
             )}
           </div>
