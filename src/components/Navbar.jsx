@@ -69,6 +69,11 @@ const Navbar = () => {
               >
                 Moawin Art Auction
               </li>
+              <li className="hover:text-[#0DBB56] transition">
+                <a href="/Sadequain Art work.pdf" download="Catalogue.pdf">
+                  Catalogue
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -145,6 +150,7 @@ const Navbar = () => {
             >
               Contact
             </a>
+
             <li
               onClick={() => {
                 navigate("/");
@@ -154,6 +160,9 @@ const Navbar = () => {
             >
               Moawin Art Auction
             </li>
+            <a href="/Sadequain Art work.pdf" download="Catalogue.pdf">
+              Catalogue
+            </a>
 
             {isAuthenticated ? (
               <div
@@ -164,15 +173,13 @@ const Navbar = () => {
                 <span>Logout</span>
               </div>
             ) : (
-              <div
+              <Button
+                title="Sign In"
                 onClick={() => {
                   toggleModal("signin");
                   setIsMenuOpen(false);
                 }}
-                className="uppercase cursor-pointer text-gray-700 hover:text-brightColor"
-              >
-                Sign In
-              </div>
+              />
             )}
           </div>
 

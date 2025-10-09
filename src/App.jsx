@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import React from "react";
+import { Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import ProductDetail from "./pages/ProductDetail";
 
 const App = () => {
-  // ✅ Enhanced scroll-to-hash logic
- 
 
   return (
     <div>
-      
-
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -25,9 +21,7 @@ const App = () => {
         pauseOnHover={false}
         theme="light"
       />
-
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/art/:id" element={<ProductDetail />} />

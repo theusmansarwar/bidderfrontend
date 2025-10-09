@@ -12,7 +12,7 @@ import {
 import { BiFirstPage, BiLastPage } from "react-icons/bi";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
-const ProductsSection = () => {
+const ProductsSection = ({onDataLoaded }) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(20);
@@ -23,10 +23,12 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       try {
         const res = await getAllProducts(page, rowsPerPage);
+        
 
         setProducts(res?.products.sort(() => Math.random() - 0.5) || []);
         setTotalItems(res?.total || 0); // ✅ use res.total
         setTotalPages(res?.totalPages || 1);
+        onDataLoaded?.();
       } catch (error) {
         console.error("Error fetching products:", error);
       }

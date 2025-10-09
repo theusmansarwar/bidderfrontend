@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getFeaturedArtists } from "../DAL/Fetch";
 
-const FeaturedArtists = () => {
+const FeaturedArtists = ({onDataLoaded }) => {
   const [featured, setFeatured] = useState([]);
   const [expanded, setExpanded] = useState({});
   const [loading, setLoading] = useState(true);
@@ -19,6 +19,7 @@ const FeaturedArtists = () => {
 
         if (res && res.status === 200 && res.artists) {
           setFeatured(res.artists);
+          onDataLoaded?.();
         } else {
           setError("Failed to fetch featured artists.");
         }
@@ -46,7 +47,7 @@ const FeaturedArtists = () => {
   }
 
   return (
-    <section className="w-[90%] m-auto lg:w-full bg-white py-12">
+    <section className="w-[90%] m-auto lg:w-full bg-white py-12 ">
       <div className="max-w-5xl ml-0 lg:ml-[10%]">
         <h2 className="text-2xl md:text-4xl font-semibold text-gray-800 mb-8 text-center lg:text-left">
           Featured Artists & Works
