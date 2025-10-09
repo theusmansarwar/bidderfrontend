@@ -23,8 +23,8 @@ const AboutAuction = () => {
       {/* Image Section */}
       <div className="w-full md:w-2/5 flex justify-center">
         <img
-          className="w-full max-w-full h-52 md:h-72 md:max-w-md rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.1)] object-cover"
-          src="/about-auction.jpg"
+          className="w-full  md:max-w-md rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.1)] object-cover"
+          src="/about-auction.svg"
           alt="Moawin"
         />
       </div>
