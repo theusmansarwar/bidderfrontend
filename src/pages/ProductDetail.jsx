@@ -162,7 +162,7 @@ const ProductDetail = () => {
           <img
             src={`${baseUrl}${product.image}`}
             alt={product.title}
-            className="relative max-h-[90%] max-w-[90%] object-contain rounded-md shadow-xl transition-transform duration-300 z-10"
+            className="relative max-h-[90%] max-w-[90%] object-contain rounded-md shadow-xl transition-transform duration-300 z-1"
           />
 
           {/* Zoom Overlay — visible only on desktop */}

@@ -45,7 +45,7 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
         setHighestBid(maxBid);
         onHighestBidChange(maxBid);
       } else {
-        const minBid = Number(product.minimumBid) || 0;
+        const minBid =  0;
         setHighestBid(minBid);
         onHighestBidChange(minBid);
       }
