@@ -41,7 +41,7 @@ const Signup = ({ onSignInClick, onClose, onSignUpSuccess }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
-      <div className="w-[94%] bg-white rounded-lg shadow-xl p-4 md:p-8 relative flex flex-col h-[75vh] md:h-[500px] md:w-[450px]">
+      <div className="w-[94%] bg-white rounded-lg shadow-xl p-4 md:p-8 relative flex flex-col h-[68vh] md:h-[500px] md:w-[450px]">
         <button
           className="absolute top-4 right-4 text-gray-600 text-2xl hover:text-gray-800 transition-colors duration-200 cursor-pointer"
           onClick={onClose}

@@ -7,6 +7,15 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
   const [highestBid, setHighestBid] = useState(0);
   const [socket, setSocket] = useState(null);
 
+  // ✅ Format currency safely
+  const formatCurrency = (amount) => {
+    const num = Number(amount) || 0;
+    return num.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
+
   // 🔹 Initialize Socket.IO connection
   useEffect(() => {
     const newSocket = io("https://auction.ztesting.site", {
@@ -32,12 +41,13 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
       setBids(productBids);
 
       if (productBids.length > 0) {
-        const maxBid = Math.max(...productBids.map((b) => b.bidAmount));
+        const maxBid = Math.max(...productBids.map((b) => Number(b.bidAmount) || 0));
         setHighestBid(maxBid);
         onHighestBidChange(maxBid);
       } else {
-        setHighestBid( 0);
-        onHighestBidChange(product.minimumBid || 0);
+        const minBid = Number(product.minimumBid) || 0;
+        setHighestBid(minBid);
+        onHighestBidChange(minBid);
       }
     };
 
@@ -50,11 +60,12 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
 
     const handleBidUpdated = (data) => {
       if (data.productId === productId) {
-        setHighestBid(data.bidAmount);
-        onHighestBidChange(data.bidAmount);
+        const newBid = Number(data.bidAmount) || 0;
+        setHighestBid(newBid);
+        onHighestBidChange(newBid);
 
         setBids((prev) => [
-          { bidder: data.bidderId, bidAmount: data.bidAmount },
+          { bidder: data.bidderId, bidAmount: newBid },
           ...prev.slice(0, 9), // Keep top 10 bids
         ]);
       }
@@ -65,15 +76,15 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
   }, [socket, productId, onHighestBidChange]);
 
   return (
-    <div className=" border border-gray-200 p-4 rounded-xl shadow-md bg-white w-full transition-all duration-300 hover:shadow-lg">
+    <div className="border border-gray-200 p-4 rounded-xl shadow-md bg-white w-full transition-all duration-300 hover:shadow-lg">
       <h2 className="text-2xl md:text-4xl text-center font-semibold text-gray-800 mb-2.5">
-         Auction List
+        Auction List
       </h2>
 
       <div className="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg mb-5">
         <span className="text-gray-700 font-medium">Current Highest Bid:</span>
         <span className="text-lg font-semibold text-green-600">
-          ${highestBid}
+          {formatCurrency(highestBid)}
         </span>
       </div>
 
@@ -112,7 +123,7 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
                       i === 0 ? "text-green-600 font-semibold" : "text-gray-800"
                     }`}
                   >
-                    ${b.bidAmount}
+                    {formatCurrency(b.bidAmount)}
                   </td>
                 </tr>
               ))}

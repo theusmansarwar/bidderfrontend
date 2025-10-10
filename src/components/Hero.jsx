@@ -95,7 +95,7 @@ const Hero = () => {
   }, [current, slides.length]);
 
   return (
-    <div className="bg-transparent relative w-[94%] sm:w-[90%] m-auto h-[360px] sm:h-[420px] md:h-[520px] mt-6 md:mt-8 overflow-hidden rounded-lg shadow-lg">
+    <div className="bg-transparent relative w-[94%] sm:w-[90%] m-auto h-[400px] sm:h-[420px] md:h-[520px] lg:mt-6 mt-2 md:mt-8 overflow-hidden rounded-lg shadow-lg">
       {/* Slides */}
       <div
         ref={slideRef}
@@ -120,7 +120,7 @@ const Hero = () => {
             <img
               src={slide.image}
               alt={slide.title}
-              className="relative z-10 max-h-[70%] sm:max-h-[80%] max-w-[95%] sm:max-w-[90%] object-contain rounded-md shadow-lg"
+              className="relative z-10 max-h-[50%] sm:max-h-[80%] max-w-[95%] sm:max-w-[90%] object-contain rounded-md shadow-lg"
             />
 
             {/* Content */}
@@ -128,7 +128,9 @@ const Hero = () => {
               <h2 className="text-lg sm:text-2xl font-bold uppercase tracking-wide">
                 {slide.artist}
               </h2>
-              <p className="italic text-sm sm:text-lg mt-1 sm:mt-2">{slide.title}</p>
+              <p className="italic text-sm sm:text-lg mt-1 sm:mt-2">
+                {slide.title}
+              </p>
 
               <ul className="mt-2 sm:mt-3 space-y-1 text-xs sm:text-sm md:text-base leading-relaxed">
                 {slide.details.map((line, i) => {

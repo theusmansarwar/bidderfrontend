@@ -27,12 +27,23 @@ const ProductDetail = () => {
   const toggleModal = (type) => setModalType(type);
   const closeModal = () => setModalType(null);
 
-  // Fetch product by ID
+  // ✅ Consistent currency formatting
+  const formatPrice = (value) => {
+    const num = Number(value) || 0;
+    return num.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
+  // 🔹 Fetch product by ID
   useEffect(() => {
     const fetchProductById = async () => {
       try {
         const res = await getProductById(id);
-        setProduct(res?.product);
+        if (res?.product) setProduct(res.product);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -40,14 +51,14 @@ const ProductDetail = () => {
     fetchProductById();
   }, [id]);
 
-  // Countdown timer
+  // 🔹 Countdown timer
   useEffect(() => {
     if (!product?.auctionEndDate) return;
 
     const updateTimer = () => {
       const now = new Date();
       const end = new Date(product.auctionEndDate);
-      const diff = end.getTime() - now.getTime();
+      const diff = end - now;
 
       if (diff <= 0) {
         setTimeLeft("Auction Ended");
@@ -55,9 +66,7 @@ const ProductDetail = () => {
       }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
@@ -74,17 +83,17 @@ const ProductDetail = () => {
     return () => clearInterval(interval);
   }, [product]);
 
-  // Place bid (starting bid remains unchanged)
+  // 🔹 Place bid handler
   const handlePlaceBid = async () => {
     if (!user) {
       toggleModal("signup");
       return;
     }
 
-    const minBid = highestBid || product.minimumBid;
+    const minBid = Number(highestBid) || Number(product?.minimumBid) || 0;
 
     if (!bidPrice || Number(bidPrice) <= minBid) {
-      toast.error(`Bid must be higher than $${minBid}`);
+      toast.error(`Bid must be higher than ${formatPrice(minBid)}`);
       setShowBidError(true);
       return;
     }
@@ -99,7 +108,7 @@ const ProductDetail = () => {
       await placeBid(bidData);
       toast.success("Bid placed successfully!");
       setBidPrice("");
-      setHighestBid(Number(bidPrice)); // only update highest bid
+      setHighestBid(Number(bidPrice));
       setShowBidError(false);
     } catch (error) {
       console.error("Error placing bid:", error);
@@ -152,10 +161,7 @@ const ProductDetail = () => {
               <h2 className="text-2xl mb-2.5 lg:mb-0 md:text-4xl font-semibold text-gray-800">
                 {product.title}
               </h2>
-              <Button
-                title="Back To Art"
-                onClick={() => navigate("/#artworks")}
-              />
+              <Button title="Back To Art" onClick={() => navigate("/#artworks")} />
             </div>
 
             <div
@@ -173,7 +179,7 @@ const ProductDetail = () => {
             <p className="font-normal text-base text-gray-700">
               Starting Bid:{" "}
               <span className="font-semibold text-base text-gray-700">
-                ${product.minimumBid}
+                {formatPrice(product.minimumBid)}
               </span>
             </p>
 
@@ -198,13 +204,13 @@ const ProductDetail = () => {
             <div className="font-normal text-base text-gray-700 space-y-1">
               <p>
                 <span className="text-gray-600">Starting At: </span>
-                <span className="font-semibold text-gray-800">
+                <span className="font-semibold text-sm lg:text-base text-gray-800">
                   {formatAuctionDate(product.auctionStartDate)}
                 </span>
               </p>
               <p>
                 <span className="text-gray-600">Ending At: </span>
-                <span className="font-semibold text-gray-800">
+                <span className="font-semibold text-sm lg:text-base text-gray-800">
                   {formatAuctionDate(product.auctionEndDate)}
                 </span>
               </p>
@@ -219,9 +225,7 @@ const ProductDetail = () => {
             {/* Place Bid */}
             <div className="mt-2 flex flex-col gap-3">
               <div className="relative w-full lg:flex gap-2.5 items-center">
-                <span className="absolute left-3 top-[8px] text-gray-500">
-                  $
-                </span>
+                <span className="absolute left-3 top-[8px] text-gray-500">$</span>
                 <input
                   type="number"
                   placeholder="Enter bid amount"
@@ -230,16 +234,15 @@ const ProductDetail = () => {
                     setBidPrice(e.target.value);
                     setShowBidError(false);
                   }}
-                  className={`border rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] outline-0 transition
-                    ${
-                      showBidError
-                        ? "border-red-500 focus:ring-red-300"
-                        : "border-gray-300 focus:ring-[#0DBB56]/30"
-                    }`}
+                  className={`border rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] outline-0 transition ${
+                    showBidError
+                      ? "border-red-500 focus:ring-red-300"
+                      : "border-gray-300 focus:ring-[#0DBB56]/30"
+                  }`}
                 />
                 <button
                   onClick={handlePlaceBid}
-                  className="mt-2.5 lg:mt-0 w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
+                  className="mt-2.5 lg:mt-0 w-full lg:w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
                 >
                   Place Bid
                 </button>
@@ -250,7 +253,8 @@ const ProductDetail = () => {
                   showBidError ? "text-red-500 font-medium" : "text-gray-500"
                 }`}
               >
-                (Enter more than or equal to ${highestBid || product.minimumBid})
+                (Enter more than or equal to{" "}
+                {formatPrice(highestBid || product.minimumBid)})
               </p>
             </div>
           </div>

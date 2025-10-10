@@ -6,6 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import Signin from "./Signin";
 import Signup from "./Signup";
 import { IoLogOutOutline, IoPersonCircleOutline } from "react-icons/io5";
+import { FiDownload } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -65,13 +66,18 @@ const Navbar = () => {
               </li>
               <li
                 onClick={() => navigate("/")}
-                className="hover:text-[#0DBB56] transition cursor-pointer list-none"
+                className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
               >
                 Moawin Art Auction
               </li>
               <li className="hover:text-[#0DBB56] transition">
-                <a href="/Sadequain Art work.pdf" download="Catalogue.pdf">
+                <a
+                  href="/Sadequain Art work.pdf"
+                  download="Catalogue.pdf"
+                  className="flex items-center gap-2  hover:text-[#0DBB56]"
+                >
                   Catalogue
+                  <FiDownload className="text-lg" />
                 </a>
               </li>
             </ul>
@@ -83,12 +89,12 @@ const Navbar = () => {
               <div className="relative" ref={dropdownRef}>
                 <IoPersonCircleOutline
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="text-[25px] text-gray-700 cursor-pointer"
+                  className="text-[25px]  cursor-pointer"
                 />
                 {isDropdownOpen && (
                   <div className="absolute right-0 w-48 mt-2 bg-white border border-gray-100 rounded-md shadow-lg z-50">
                     <ul className="py-2">
-                      <li className="flex items-center px-4 py-2 text-gray-700 border-b border-gray-100">
+                      <li className="flex items-center px-4 py-2  border-b border-gray-100">
                         <IoPersonCircleOutline className="w-5 h-5 mr-2 text-gray-500" />
                         <span>{user?.name || "Profile"}</span>
                       </li>
@@ -129,7 +135,7 @@ const Navbar = () => {
             <a
               target="_blank"
               href="https://moawin-usa.org/"
-              className="text-gray-700 hover:text-brightColor transition-colors"
+              className=" hover:text-brightColor transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Home
@@ -137,7 +143,7 @@ const Navbar = () => {
             <a
               target="_blank"
               href="https://moawin-usa.org/about/"
-              className="text-gray-700 hover:text-brightColor transition-colors"
+              className=" hover:text-brightColor transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               About
@@ -145,7 +151,7 @@ const Navbar = () => {
             <a
               target="_blank"
               href="https://moawin-usa.org/contact/"
-              className="text-gray-700 hover:text-brightColor transition-colors"
+              className=" hover:text-brightColor transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
@@ -156,20 +162,26 @@ const Navbar = () => {
                 navigate("/");
                 setIsMenuOpen(false);
               }}
-              className="hover:text-[#0DBB56] transition cursor-pointer list-none"
+              className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
             >
               Moawin Art Auction
             </li>
-            <a href="/Sadequain Art work.pdf" download="Catalogue.pdf">
+            <a
+              href="/Sadequain Art work.pdf"
+              download="Catalogue.pdf"
+              className="flex items-center gap-2  hover:text-[#0DBB56]"
+            >
               Catalogue
+              <FiDownload className="text-lg" />
             </a>
 
             {isAuthenticated ? (
               <div
-                className="flex items-center text-gray-700 hover:text-brightColor cursor-pointer"
+                className="flex items-center  hover:text-brightColor cursor-pointer"
                 onClick={logout}
+                
               >
-                <IoLogOutOutline className="w-5 h-5 mr-2 text-brightColor" />
+                <IoLogOutOutline className="w-5 h-5 mr-2 text-red-500" />
                 <span>Logout</span>
               </div>
             ) : (
@@ -186,7 +198,7 @@ const Navbar = () => {
           {/* Close Button */}
           <button
             onClick={toggleMenu}
-            className="absolute top-4 right-4 text-3xl text-gray-700"
+            className="absolute top-4 right-4 text-3xl "
           >
             <FaTimes />
           </button>

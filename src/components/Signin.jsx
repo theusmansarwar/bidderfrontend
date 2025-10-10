@@ -43,7 +43,7 @@ const Signin = ({ onSignUpClick, onClose, onSignInSuccess }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-40">
-      <div className="bg-white p-4 md:p-8 rounded-lg w-[94%] relative h-[370px] md:h-[370px] md:w-[450px]">
+      <div className="bg-white p-4 md:p-8 rounded-lg w-[94%] relative h-[350px] md:h-[370px] md:w-[450px]">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-600 text-2xl hover:text-gray-800 transition-colors duration-200 cursor-pointer"
