@@ -6,6 +6,7 @@ import { placeBid } from "../DAL/Create";
 import { getProductById } from "../DAL/Fetch";
 import Button from "../components/Button";
 import { GiSandsOfTime } from "react-icons/gi";
+import { FaSearchPlus, FaTimes } from "react-icons/fa";
 import Signup from "../components/Signup";
 import Signin from "../components/Signin";
 import { AuthContext } from "../context/AuthContext";
@@ -27,7 +28,12 @@ const ProductDetail = () => {
   const toggleModal = (type) => setModalType(type);
   const closeModal = () => setModalType(null);
 
-  // ✅ Consistent currency formatting
+  // Image zoom modal control
+  const [isZoomed, setIsZoomed] = useState(false);
+  const openZoom = () => setIsZoomed(true);
+  const closeZoom = () => setIsZoomed(false);
+
+  // ✅ Currency formatting
   const formatPrice = (value) => {
     const num = Number(value) || 0;
     return num.toLocaleString("en-US", {
@@ -66,7 +72,9 @@ const ProductDetail = () => {
       }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
@@ -119,7 +127,6 @@ const ProductDetail = () => {
   const formatAuctionDate = (isoDate) => {
     if (!isoDate) return "";
     const date = new Date(isoDate);
-
     const formattedDate = date.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "long",
@@ -130,7 +137,6 @@ const ProductDetail = () => {
       minute: "2-digit",
       hour12: true,
     });
-
     return `${formattedDate} | ${formattedTime}`;
   };
 
@@ -139,18 +145,33 @@ const ProductDetail = () => {
   return (
     <>
       <div className="w-[90%] mx-auto pb-5 overflow-x-hidden">
-        {/* Art Image Container */}
-        <div className="relative w-full lg:h-[400px] h-[300px] overflow-hidden rounded-lg shadow-lg border border-gray-100 flex items-center justify-center bg-gray-100">
+        {/* Image container with zoom icon */}
+        {/* Image Container with Zoom Cursor (Desktop) and Click Zoom (Mobile) */}
+        <div
+          className="relative w-full lg:h-[400px] h-[300px] overflow-hidden rounded-lg shadow-lg border border-gray-100 flex items-center justify-center bg-gray-100 group"
+          onClick={openZoom} // works for mobile tap
+        >
+          {/* Blurred Background */}
           <img
             src={`${baseUrl}${product.image}`}
             alt={product.title}
             className="absolute inset-0 w-full h-full object-cover blur-lg scale-110 opacity-50"
           />
+
+          {/* Main Image */}
           <img
             src={`${baseUrl}${product.image}`}
             alt={product.title}
-            className="relative max-h-[90%] max-w-[90%] object-contain rounded-md shadow-xl z-1"
+            className="relative max-h-[90%] max-w-[90%] object-contain rounded-md shadow-xl transition-transform duration-300 z-10"
           />
+
+          {/* Zoom Overlay — visible only on desktop */}
+          <div
+            className="hidden lg:flex absolute inset-0 z-20   items-center justify-center transition-all"
+            style={{ cursor: "zoom-in" }}
+          >
+            {/* <FaSearchPlus className="text-white text-3xl opacity-80 group-hover:scale-110 transition-transform duration-300" /> */}
+          </div>
         </div>
 
         {/* Details + Bidding */}
@@ -161,7 +182,10 @@ const ProductDetail = () => {
               <h2 className="text-2xl mb-2.5 lg:mb-0 md:text-4xl font-semibold text-gray-800">
                 {product.title}
               </h2>
-              <Button title="Back To Art" onClick={() => navigate("/#artworks")} />
+              <Button
+                title="Back To Art"
+                onClick={() => navigate("/#artworks")}
+              />
             </div>
 
             <div
@@ -216,7 +240,6 @@ const ProductDetail = () => {
               </p>
             </div>
 
-            {/* Time Left */}
             <p className="text-[#0DBB56] font-medium text-sm flex items-center gap-1">
               <GiSandsOfTime className="text-gray-700 shrink-0 text-lg" />
               Time Left: {timeLeft}
@@ -225,7 +248,9 @@ const ProductDetail = () => {
             {/* Place Bid */}
             <div className="mt-2 flex flex-col gap-3">
               <div className="relative w-full lg:flex gap-2.5 items-center">
-                <span className="absolute left-3 top-[8px] text-gray-500">$</span>
+                <span className="absolute left-3 top-[8px] text-gray-500">
+                  $
+                </span>
                 <input
                   type="number"
                   placeholder="Enter bid amount"
@@ -266,7 +291,27 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* Modals */}
+      {/* 🔍 Fullscreen Image Zoom Modal */}
+      {isZoomed && (
+        <div
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center cursor-zoom-out"
+          onClick={closeZoom}
+        >
+          <button
+            onClick={closeZoom}
+            className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 cursor-pointer"
+          >
+            <FaTimes />
+          </button>
+          <img
+            src={`${baseUrl}${product.image}`}
+            alt={product.title}
+            className="max-w-[90%] max-h-[90%] object-contain rounded-md"
+          />
+        </div>
+      )}
+
+      {/* Auth Modals */}
       {modalType === "signin" && (
         <Signin
           onSignUpClick={() => toggleModal("signup")}
