@@ -88,7 +88,7 @@ const BiddingChart = () => {
                 Bidder
               </th>
               <th className="px-3 py-2 border-b border-gray-200 min-w-[220px]">
-                Product
+                Art
               </th>
               <th className="px-3 py-2 border-b border-gray-200 text-right min-w-[120px]">
                 Amount
