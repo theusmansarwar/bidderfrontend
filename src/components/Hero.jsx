@@ -21,7 +21,7 @@ const heroData = [
     details: [
       "Auction: Modern & Contemporary Arab, Iranian, Indian & Pakistani Art",
       "Venue: Dubai, Royal Mirage Hotel",
-      "Date: 3 March 2008, 19:30 +04",
+      "Date: 3 March 2008, 19:30 ",
       "Sold For: USD 156,000 (inc. premium)",
     ],
   },
@@ -33,7 +33,7 @@ const heroData = [
     details: [
       "Auction: Modern & Contemporary Arab, Iranian, Indian & Pakistani Art",
       "Venue: Dubai, Royal Mirage Hotel",
-      "Date: 3 March 2008, 19:30 +04",
+      "Date: 3 March 2008, 19:30 ",
       "Sold For: USD 336,000 (inc. premium)",
     ],
   },
@@ -45,7 +45,7 @@ const heroData = [
     details: [
       "Auction: Modern & Contemporary Arab, Iranian, Indian & Pakistani Art",
       "Venue: Dubai, Royal Mirage Hotel",
-      "Date: 3 March 2008, 19:30 +04",
+      "Date: 3 March 2008, 19:30 ",
       "Sold For: USD 36,000 (inc. premium)",
     ],
   },
