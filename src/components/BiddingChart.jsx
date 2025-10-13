@@ -35,7 +35,7 @@ const BiddingChart = () => {
 
   // 🔹 Connect to WebSocket server
   useEffect(() => {
-    const newSocket = io("https://auction.ztesting.site", {
+    const newSocket = io("https://moawinauctionusa.org/", {
       path: "/backend/socket.io",
       transports: ["websocket"],
       withCredentials: true,

@@ -18,7 +18,7 @@ const BiddingList = ({ productId, onHighestBidChange }) => {
 
   // 🔹 Initialize Socket.IO connection
   useEffect(() => {
-    const newSocket = io("https://auction.ztesting.site", {
+    const newSocket = io("https://moawinauctionusa.org/", {
       path: "/backend/socket.io", // matches NGINX proxy
       transports: ["websocket"],
       withCredentials: true,
