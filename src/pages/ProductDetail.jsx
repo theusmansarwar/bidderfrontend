@@ -22,6 +22,7 @@ const ProductDetail = () => {
   const [timeLeft, setTimeLeft] = useState("");
   const [highestBid, setHighestBid] = useState(0);
   const [showBidError, setShowBidError] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // Modal control
   const [modalType, setModalType] = useState(null);
@@ -105,7 +106,9 @@ const ProductDetail = () => {
       setShowBidError(true);
       return;
     }
-
+    setShowConfirmModal(true);
+  };
+  const confirmPlaceBid = async () => {
     const bidData = {
       productId: id,
       bidderId: user._id,
@@ -121,6 +124,8 @@ const ProductDetail = () => {
     } catch (error) {
       console.error("Error placing bid:", error);
       toast.error(error.response?.data?.message || "Failed to place bid");
+    } finally {
+      setShowConfirmModal(false);
     }
   };
 
@@ -278,7 +283,7 @@ const ProductDetail = () => {
                   showBidError ? "text-red-500 font-medium" : "text-gray-500"
                 }`}
               >
-                (Enter more than or equal to{" "}
+                (Enter more than {" "}
                 {formatPrice(highestBid || product.minimumBid)})
               </p>
             </div>
@@ -325,6 +330,37 @@ const ProductDetail = () => {
           onSignInClick={() => toggleModal("signin")}
           onSignupSuccess={closeModal}
         />
+      )}
+      {/* ✅ Confirmation Modal */}
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-sm p-6 text-center">
+            <h2 className="text-xl font-semibold text-gray-800 mb-3">
+              Confirm Your Bid
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to place a bid of{" "}
+              <span className="font-bold text-gray-900">
+                {formatPrice(bidPrice)}
+              </span>{" "}
+              for <span className="font-semibold">{product.title}</span>?
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setShowConfirmModal(false)}
+                className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmPlaceBid}
+                className="px-4 py-2 rounded-md bg-[#0DBB56] text-white hover:bg-[#0DBB56]/90 cursor-pointer"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
