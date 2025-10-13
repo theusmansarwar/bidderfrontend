@@ -46,7 +46,7 @@ const BiddingChart = () => {
     // Ask server for latest bids on connect
     newSocket.on("connect", () => {
       console.log("✅ Connected to socket");
-      newSocket.emit("getLatestBids");
+      newSocket.emit("latestBids");
     });
 
     return () => {
