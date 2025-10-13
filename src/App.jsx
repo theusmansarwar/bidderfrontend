@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import ProductDetail from "./pages/ProductDetail";
+import Results from "./pages/Results";
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/art/:id" element={<ProductDetail />} />
+        <Route path="/results" element={<Results />} />
       </Routes>
     </div>
   );

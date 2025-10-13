@@ -151,7 +151,6 @@ const ProductDetail = () => {
     <>
       <div className="w-[90%] mx-auto pb-5 overflow-x-hidden">
         {/* Image container with zoom icon */}
-        {/* Image Container with Zoom Cursor (Desktop) and Click Zoom (Mobile) */}
         <div
           className="relative w-full lg:h-[400px] h-[300px] overflow-hidden rounded-lg shadow-lg border border-gray-100 flex items-center justify-center bg-gray-100 group"
           onClick={openZoom} // works for mobile tap
@@ -221,75 +220,110 @@ const ProductDetail = () => {
               )}
             </p>
 
-            <div className="flex items-center my-5">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="mx-3 text-green-600 font-medium text-sm">
-                Start Bid Now
-              </span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
+            {product.soldOut ? (
+              // 🔸 Sold painting section
+              (() => {
+                const highestBid = product.bids?.length
+                  ? product.bids.reduce((max, b) =>
+                      b.bidAmount > max.bidAmount ? b : max
+                    )
+                  : null;
 
-            {/* Auction Dates */}
-            <div className="font-normal text-base text-gray-700 space-y-1">
-              <p>
-                <span className="text-gray-600">Starting At: </span>
-                <span className="font-semibold text-sm lg:text-base text-gray-800">
-                  {formatAuctionDate(product.auctionStartDate)}
-                </span>
-              </p>
-              <p>
-                <span className="text-gray-600">Ending At: </span>
-                <span className="font-semibold text-sm lg:text-base text-gray-800">
-                  {formatAuctionDate(product.auctionEndDate)}
-                </span>
-              </p>
-            </div>
+                return (
+                  <div className="my-5 bg-gray-100 border border-gray-300 rounded-lg p-4 text-center">
+                    <p className="text-gray-800 font-medium text-base">
+                      Sold on{" "}
+                      <span className="font-semibold text-gray-900">
+                        {highestBid
+                          ? new Date(highestBid.createdAt).toLocaleDateString()
+                          : new Date(product.updatedAt).toLocaleDateString()}
+                      </span>{" "}
+                      for{" "}
+                      <span className="text-[#0DBB56] font-semibold">
+                        {highestBid
+                          ? formatPrice(highestBid.bidAmount)
+                          : formatPrice(product.minimumBid)}
+                      </span>
+                    </p>
+                  </div>
+                );
+              })()
+            ) : (
+              <>
+                {/* Divider */}
+                <div className="flex items-center my-5">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="mx-3 text-green-600 font-medium text-sm">
+                    Start Bid Now
+                  </span>
+                  <div className="flex-grow border-t border-gray-300"></div>
+                </div>
 
-            <p className="text-[#0DBB56] font-medium text-sm flex items-center gap-1">
-              <GiSandsOfTime className="text-gray-700 shrink-0 text-lg" />
-              Time Left: {timeLeft}
-            </p>
+                {/* Auction Dates */}
+                <div className="font-normal text-base text-gray-700 space-y-1">
+                  <p>
+                    <span className="text-gray-600">Starting At: </span>
+                    <span className="font-semibold text-sm lg:text-base text-gray-800">
+                      {formatAuctionDate(product.auctionStartDate)}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="text-gray-600">Ending At: </span>
+                    <span className="font-semibold text-sm lg:text-base text-gray-800">
+                      {formatAuctionDate(product.auctionEndDate)}
+                    </span>
+                  </p>
+                </div>
 
-            {/* Place Bid */}
-            <div className="mt-2 flex flex-col gap-3">
-              <div className="relative w-full lg:flex gap-2.5 items-center">
-                <span className="absolute left-3 top-[8px] text-gray-500">
-                  $
-                </span>
-                <input
-                  type="number"
-                  placeholder="Enter bid amount"
-                  value={bidPrice}
-                  onChange={(e) => {
-                    setBidPrice(e.target.value);
-                    setShowBidError(false);
-                  }}
-                  className={`border rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] outline-0 transition ${
-                    showBidError
-                      ? "border-red-500 focus:ring-red-300"
-                      : "border-gray-300 focus:ring-[#0DBB56]/30"
-                  }`}
-                />
-                <button
-                  onClick={handlePlaceBid}
-                  className="mt-2.5 lg:mt-0 w-full lg:w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
-                >
-                  Place Bid
-                </button>
-              </div>
+                <p className="text-[#0DBB56] font-medium text-sm flex items-center gap-1">
+                  <GiSandsOfTime className="text-gray-700 shrink-0 text-lg" />
+                  Time Left: {timeLeft}
+                </p>
 
-              <p
-                className={`text-sm ${
-                  showBidError ? "text-red-500 font-medium" : "text-gray-500"
-                }`}
-              >
-                (Enter more than {" "}
-                {formatPrice(highestBid || product.minimumBid)})
-              </p>
-            </div>
+                {/* Place Bid */}
+                <div className="mt-2 flex flex-col gap-3">
+                  <div className="relative w-full lg:flex gap-2.5 items-center">
+                    <span className="absolute left-3 top-[8px] text-gray-500">
+                      $
+                    </span>
+                    <input
+                      type="number"
+                      placeholder="Enter bid amount"
+                      value={bidPrice}
+                      onChange={(e) => {
+                        setBidPrice(e.target.value);
+                        setShowBidError(false);
+                      }}
+                      className={`border rounded-md pl-7 pr-3 py-2 w-full lg:w-[300px] outline-0 transition ${
+                        showBidError
+                          ? "border-red-500 focus:ring-red-300"
+                          : "border-gray-300 focus:ring-[#0DBB56]/30"
+                      }`}
+                    />
+                    <button
+                      onClick={handlePlaceBid}
+                      className="mt-2.5 lg:mt-0 w-full lg:w-fit bg-[#0DBB56] text-white px-6 py-2 rounded-md hover:bg-[#0DBB56]/90 transition cursor-pointer"
+                    >
+                      Place Bid
+                    </button>
+                  </div>
+
+                  <p
+                    className={`text-sm ${
+                      showBidError
+                        ? "text-red-500 font-medium"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    (Enter more than{" "}
+                    {formatPrice(highestBid || product.minimumBid)})
+                  </p>
+                </div>
+              </>
+            )}
           </div>
 
-          {/* Right: Bidding List */}
+          {/* Right */}
           <div className="w-full lg:w-[30%]">
             <BiddingList productId={id} onHighestBidChange={setHighestBid} />
           </div>

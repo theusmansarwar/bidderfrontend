@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import ProductsSection from "../components/ProductsSection";
 import AboutAuction from "../components/AboutAuction";
 import FeaturedArtists from "../components/FeaturedArtists";
+import BiddingChart from "../components/BiddingChart";
 
 const Home = () => {
   const OFFSET = 10;
@@ -41,6 +42,7 @@ const Home = () => {
   return (
     <div>
       <Hero />
+      <BiddingChart/>
       <AboutAuction />
       <FeaturedArtists onDataLoaded={() => setDataLoaded(true)} />
       <div id="artworks">

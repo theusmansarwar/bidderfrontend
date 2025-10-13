@@ -30,3 +30,13 @@ export const getFeaturedArtists = async (limit) => {
   };
   return invokeApi(reqObj);
 };
+export const getLatestBids = async () => {
+  const reqObj = {
+    path: `/api/bids/listlivebidders`,
+    method: "GET",
+    headers: {},
+
+    body: {},
+  };
+  return invokeApi(reqObj);
+};

@@ -70,6 +70,12 @@ const Navbar = () => {
               >
                 Moawin Art Auction
               </li>
+              <li
+                onClick={() => navigate("/results")}
+                className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
+              >
+                Results
+              </li>
               <li className="hover:text-[#0DBB56] transition">
                 <a
                   href="/Sadequain Art work.pdf"
@@ -165,6 +171,15 @@ const Navbar = () => {
               className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
             >
               Moawin Art Auction
+            </li>
+            <li
+              onClick={() => {
+                navigate("/results");
+                setIsMenuOpen(false);
+              }}
+              className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
+            >
+              Results
             </li>
             <a
               href="/Sadequain Art work.pdf"

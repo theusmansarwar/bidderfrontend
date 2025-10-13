@@ -20,6 +20,13 @@ const ProductCard = ({ data }) => {
           alt={data.title}
           className="w-full h-48 object-cover mb-4 rounded-lg"
         />
+
+        {/* 🔴 Sold Out Label */}
+        {data.soldOut && (
+          <div className="absolute bottom-3 right-3 bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+            SOLD OUT
+          </div>
+        )}
       </div>
 
       {/* Text Section */}
