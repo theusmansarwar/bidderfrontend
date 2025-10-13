@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { getLatestBids } from "../DAL/Fetch";
+import { useNavigate } from "react-router-dom";
 
 const BiddingChart = () => {
+  const navigate = useNavigate();
   const [bids, setBids] = useState([]);
   const [socket, setSocket] = useState(null);
 
@@ -68,6 +70,7 @@ const BiddingChart = () => {
     };
   }, [socket]);
 
+
   return (
     <div className="w-[90%] mt-10 m-auto py-8 border border-gray-200 p-4 rounded-xl shadow-md bg-white transition-all duration-300 hover:shadow-lg overflow-auto">
       <h2 className="text-2xl font-semibold text-center text-gray-800 mb-3">
@@ -106,7 +109,10 @@ const BiddingChart = () => {
                 <td className="px-3 py-2 border-b border-gray-100">
                   {b.bidder?.name || "Anonymous"}
                 </td>
-                <td className="px-3 py-2 border-b border-gray-100">
+                <td
+                  className="px-3 py-2 border-b border-gray-100  cursor-pointer"
+                  onClick={() => navigate(`/art/${b.product._id}`)}
+                >
                   {b.product?.title || "Unknown Product"}
                 </td>
                 <td
