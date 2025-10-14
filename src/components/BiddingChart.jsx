@@ -116,8 +116,12 @@ const BiddingChart = () => {
           <tbody>
             {bids.map((b, i) => (
               <tr
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent row click if present
+                  navigate(`/art/${b.product._id}`);
+                }}
                 key={b._id || i}
-                className={`transition-all duration-200 ${
+                className={`transition-all duration-200 cursor-pointer ${
                   i === 0
                     ? "bg-green-50 font-semibold text-green-700"
                     : "hover:bg-gray-50"

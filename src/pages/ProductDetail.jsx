@@ -191,7 +191,6 @@ const ProductDetail = () => {
                 onClick={() => navigate("/#artworks")}
               />
             </div>
-
             <div
               className="list-none"
               dangerouslySetInnerHTML={{ __html: product?.description || "" }}
