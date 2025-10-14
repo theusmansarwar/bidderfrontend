@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getAllProducts } from "../DAL/Fetch";
 import { baseUrl } from "../config/Config";
+import { useNavigate } from "react-router-dom";
 
 const Results = () => {
+  const navigate = useNavigate();
   const [soldOutProducts, setSoldOutProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,8 +52,11 @@ const Results = () => {
 
           return (
             <div
+              onClick={() => {
+                navigate(`/art/${item._id}`);
+              }}
               key={item._id}
-              className="group relative bg-gradient-to-b from-gray-100 to-gray-200 rounded-xl shadow-md overflow-hidden border border-gray-300 hover:shadow-xl transition-all duration-300"
+              className="group relative bg-gradient-to-b from-gray-100 to-gray-200 rounded-xl shadow-md overflow-hidden border border-gray-300 hover:shadow-xl transition-all duration-300 cursor-pointer"
             >
               {/* Image Section */}
               <div className="relative">
@@ -100,19 +105,12 @@ const Results = () => {
                   {latestBid && (
                     <p>
                       <span className="font-medium text-gray-800">
-                        Last Bid:
+                        Sold For:
                       </span>{" "}
                       $ {latestBid.toLocaleString()}
                     </p>
                   )}
                 </div>
-              </div>
-
-              {/* Footer Overlay */}
-              <div className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <p className="text-white text-sm font-medium tracking-wide">
-                  Auction Closed
-                </p>
               </div>
             </div>
           );

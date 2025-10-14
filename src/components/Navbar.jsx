@@ -78,7 +78,7 @@ const Navbar = () => {
               </li>
               <li className="hover:text-[#0DBB56] transition">
                 <a
-                  href="/Sadequain Art work.pdf"
+                  href="/Catalogue.pdf"
                   download="Catalogue.pdf"
                   className="flex items-center gap-2  hover:text-[#0DBB56]"
                 >
@@ -182,7 +182,7 @@ const Navbar = () => {
               Results
             </li>
             <a
-              href="/Sadequain Art work.pdf"
+              href="/Catalogue.pdf"
               download="Catalogue.pdf"
               className="flex items-center gap-2  hover:text-[#0DBB56]"
             >

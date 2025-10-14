@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { getLatestBids } from "../DAL/Fetch";
 import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 const BiddingChart = () => {
   const navigate = useNavigate();
@@ -70,12 +71,23 @@ const BiddingChart = () => {
     };
   }, [socket]);
 
-
   return (
     <div className="w-[90%] mt-10 m-auto py-8 border border-gray-200 p-4 rounded-xl shadow-md bg-white transition-all duration-300 hover:shadow-lg overflow-auto">
-      <h2 className="text-2xl font-semibold text-center text-gray-800 mb-3">
-        Live Bids
-      </h2>
+      <div className="w-full flex flex-col justify-center gap-2 items-center lg:flex-row lg:justify-between mb-5">
+        {" "}
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-3">
+          Live Bids
+        </h2>
+        <Button
+          title="Art Work"
+          onClick={() => {
+            const element = document.getElementById("artworks");
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }}
+        />
+      </div>
 
       {bids.length > 0 ? (
         <table className="w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
@@ -93,8 +105,14 @@ const BiddingChart = () => {
               <th className="px-3 py-2 border-b border-gray-200 text-right min-w-[120px]">
                 Amount
               </th>
+
+              {/* ✅ Align Action column center */}
+              <th className="px-3 py-2 border-b border-gray-200 text-center min-w-[120px]">
+                Action
+              </th>
             </tr>
           </thead>
+
           <tbody>
             {bids.map((b, i) => (
               <tr
@@ -109,10 +127,7 @@ const BiddingChart = () => {
                 <td className="px-3 py-2 border-b border-gray-100">
                   {b.bidder?.name || "Anonymous"}
                 </td>
-                <td
-                  className="px-3 py-2 border-b border-gray-100  cursor-pointer"
-                  onClick={() => navigate(`/art/${b.product._id}`)}
-                >
+                <td className="px-3 py-2 border-b border-gray-100">
                   {b.product?.title || "Unknown Product"}
                 </td>
                 <td
@@ -121,6 +136,19 @@ const BiddingChart = () => {
                   }`}
                 >
                   {formatCurrency(b.bidAmount)}
+                </td>
+
+                {/* ✅ Centered View Button */}
+                <td className="px-3 py-2 border-b border-gray-100 text-center">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // prevent row click if present
+                      navigate(`/art/${b.product._id}`);
+                    }}
+                    className=" hover:opacity-90 text-gray-700 text-base px-6 py-1.5 rounded transition-all cursor-pointer"
+                  >
+                    View
+                  </button>
                 </td>
               </tr>
             ))}
