@@ -156,13 +156,13 @@ const Hero = () => {
 
       {/* Arrows */}
       <div
-        className="absolute top-1/2 left-3 sm:left-5 -translate-y-1/2 w-8 h-8 md:w-9 md:h-9 bg-white/80 rounded-full cursor-pointer flex items-center justify-center hover:bg-white transition hidden sm:flex"
+        className="absolute top-1/2 left-3 sm:left-5 -translate-y-1/2 w-8 h-8 md:w-9 md:h-9 bg-white/10 rounded-full cursor-pointer flex items-center justify-center hover:bg-white/40 transition hidden sm:flex"
         onClick={prevSlide}
       >
         <FaChevronLeft className="text-[#0DBB56] text-base md:text-lg" />
       </div>
       <div
-        className="absolute top-1/2 right-3 sm:right-5 -translate-y-1/2 w-8 h-8 md:w-9 md:h-9 bg-white/80 rounded-full cursor-pointer flex items-center justify-center hover:bg-white transition hidden sm:flex"
+        className="absolute top-1/2 right-3 sm:right-5 -translate-y-1/2 w-8 h-8 md:w-9 md:h-9 bg-white/10 rounded-full cursor-pointer flex items-center justify-center hover:bg-white/40 transition hidden sm:flex"
         onClick={nextSlide}
       >
         <FaChevronRight className="text-[#0DBB56] text-base md:text-lg" />

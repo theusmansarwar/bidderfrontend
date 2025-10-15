@@ -15,7 +15,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 const ProductsSection = ({onDataLoaded }) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(40);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -47,13 +47,13 @@ const ProductsSection = ({onDataLoaded }) => {
   const end = Math.min(page * rowsPerPage, totalItems);
 
   return (
-    <div className="text-center px-4 mb-16" >
-      <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-10">
+    <div className="w-[84%] m-auto  px-4 mb-16" >
+      <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-10 text-left">
         Featured Artworks
       </h1>
 
       {/* Grid layout for cards */}
-      <div className="w-[90%] m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.length > 0 ? (
           products.map((item) => <ProductCard key={item._id} data={item} />)
         ) : (

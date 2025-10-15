@@ -55,7 +55,7 @@ const FeaturedArtists = ({onDataLoaded }) => {
 
         {featured.length === 0 ? (
           <p className="text-gray-600 text-center">
-            No featured artists found.
+           No Featured Artists Were Found.
           </p>
         ) : (
           <ul className="list-disc pl-6 space-y-6 marker:text-gray-700">
