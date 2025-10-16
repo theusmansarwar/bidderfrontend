@@ -37,7 +37,7 @@ const Signin = ({ onSignUpClick, onClose, onSignInSuccess }) => {
       onClose();
     } catch (error) {
       console.error(error);
-      toast.error(error.response?.message || "An error occurred.");
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
 

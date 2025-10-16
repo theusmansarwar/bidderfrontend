@@ -1,5 +1,5 @@
 import { useContext, useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Button from "./Button";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -9,6 +9,8 @@ import { IoLogOutOutline, IoPersonCircleOutline } from "react-icons/io5";
 import { FiDownload } from "react-icons/fi";
 
 const Navbar = () => {
+  const location = useLocation();
+
   const { user, logout } = useContext(AuthContext);
   const isAuthenticated = !!user;
 
@@ -66,16 +68,26 @@ const Navbar = () => {
               </li>
               <li
                 onClick={() => navigate("/")}
-                className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
+                className={`cursor-pointer list-none transition ${
+                  location.pathname === "/"
+                    ? "text-[#0DBB56] underline underline-offset-4 "
+                    : "hover:text-[#0DBB56]"
+                }`}
               >
                 Moawin Art Auction
               </li>
+
               <li
                 onClick={() => navigate("/results")}
-                className=" hover:text-[#0DBB56] transition cursor-pointer list-none"
+                className={`cursor-pointer list-none transition ${
+                  location.pathname === "/results"
+                    ? "text-[#0DBB56] underline underline-offset-4 "
+                    : "hover:text-[#0DBB56]"
+                }`}
               >
                 Results
               </li>
+
               <li className="hover:text-[#0DBB56] transition">
                 <a
                   href="/Catalogue.pdf"

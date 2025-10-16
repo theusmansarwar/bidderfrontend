@@ -94,13 +94,13 @@ const BiddingChart = () => {
           <thead>
             <tr className="bg-gray-100 text-gray-700 text-left">
               <th className="px-3 py-2 border-b border-gray-200 min-w-[50px]">
-                #
+                Sr #
               </th>
               <th className="px-3 py-2 border-b border-gray-200 min-w-[160px]">
-                Bidder
+                Bidder Name
               </th>
               <th className="px-3 py-2 border-b border-gray-200 min-w-[220px]">
-                Art
+                Art Name
               </th>
               <th className="px-3 py-2 border-b border-gray-200 text-right min-w-[120px]">
                 Amount
@@ -116,10 +116,6 @@ const BiddingChart = () => {
           <tbody>
             {bids.map((b, i) => (
               <tr
-                onClick={(e) => {
-                  e.stopPropagation(); // prevent row click if present
-                  navigate(`/art/${b.product._id}`);
-                }}
                 key={b._id || i}
                 className={`transition-all duration-200 cursor-pointer ${
                   i === 0

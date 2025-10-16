@@ -31,19 +31,17 @@ const Results = () => {
   // Handle no sold-out products
   if (soldOutProducts.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-600">
-        No sold-out products found.
-      </div>
+      <div className="text-center py-12 text-gray-600">No results found.</div>
     );
   }
 
   return (
     <div className="px-6 py-10 bg-gray-50 ">
-      <h2 className="text-3xl font-bold mb-8 text-gray-800 border-b-4 border-[#0DBB56] inline-block pb-2">
-        Sold Out Artworks
+      <h2 className="w-fit flex justify-self-center text-3xl font-bold mb-8 text-gray-800 border-b-4 border-[#0DBB56]  pb-2">
+        Results
       </h2>
 
-      <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="mt-2.5 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {soldOutProducts.map((item) => {
           const latestBid =
             item.bids && item.bids.length > 0

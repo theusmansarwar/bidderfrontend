@@ -49,7 +49,7 @@ const ProductsSection = ({onDataLoaded }) => {
   return (
     <div className="w-[84%] m-auto  px-4 mb-16" >
       <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-10 text-left">
-        Featured Artworks
+        Featured Art Works
       </h1>
 
       {/* Grid layout for cards */}
